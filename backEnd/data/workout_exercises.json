@@ -1,0 +1,290 @@
+[
+  {
+    "name": "Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Decline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Flyes",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-Ups",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest Dips",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Crossovers",
+    "category": "Chest"
+  },
+  {
+    "name": "Pec Deck Machine",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Dumbbell Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Decline Dumbbell Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Pull-Ups",
+    "category": "Back"
+  },
+  {
+    "name": "Chin-Ups",
+    "category": "Back"
+  },
+  {
+    "name": "Lat Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Bent Over Barbell Rows",
+    "category": "Back"
+  },
+  {
+    "name": "T-Bar Rows",
+    "category": "Back"
+  },
+  {
+    "name": "Seated Cable Row",
+    "category": "Back"
+  },
+  {
+    "name": "Deadlifts",
+    "category": "Back"
+  },
+  {
+    "name": "Rack Pulls",
+    "category": "Back"
+  },
+  {
+    "name": "Inverted Rows",
+    "category": "Back"
+  },
+  {
+    "name": "One-Arm Dumbbell Row",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Hammer Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Concentration Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Preacher Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Tricep Dips",
+    "category": "Arms"
+  },
+  {
+    "name": "Tricep Pushdowns",
+    "category": "Arms"
+  },
+  {
+    "name": "Skull Crushers",
+    "category": "Arms"
+  },
+  {
+    "name": "Overhead Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Close-Grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Kickbacks",
+    "category": "Arms"
+  },
+  {
+    "name": "Wrist Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Reverse Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Farmer's Carry",
+    "category": "Arms"
+  },
+  {
+    "name": "Plate Pinch Holds",
+    "category": "Arms"
+  },
+  {
+    "name": "Overhead Press",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Arnold Press",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Lateral Raises",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Front Raises",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Rear Delt Flyes",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Upright Rows",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Face Pulls",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Push Press",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Cable Lateral Raises",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Dumbbell Shrugs",
+    "category": "Shoulder"
+  },
+  {
+    "name": "Plank",
+    "category": "Core"
+  },
+  {
+    "name": "Crunches",
+    "category": "Core"
+  },
+  {
+    "name": "Sit-Ups",
+    "category": "Core"
+  },
+  {
+    "name": "Russian Twists",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Leg Raises",
+    "category": "Core"
+  },
+  {
+    "name": "Bicycle Crunches",
+    "category": "Core"
+  },
+  {
+    "name": "Mountain Climbers",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Crunches",
+    "category": "Core"
+  },
+  {
+    "name": "V-Ups",
+    "category": "Core"
+  },
+  {
+    "name": "Ab Wheel Rollouts",
+    "category": "Core"
+  },
+  {
+    "name": "Side Planks",
+    "category": "Core"
+  },
+  {
+    "name": "Flutter Kicks",
+    "category": "Core"
+  },
+  {
+    "name": "Squats",
+    "category": "Legs"
+  },
+  {
+    "name": "Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Walking Lunges",
+    "category": "Legs"
+  },
+  {
+    "name": "Bulgarian Split Squats",
+    "category": "Legs"
+  },
+  {
+    "name": "Step-Ups",
+    "category": "Legs"
+  },
+  {
+    "name": "Romanian Deadlifts",
+    "category": "Legs"
+  },
+  {
+    "name": "Leg Curls",
+    "category": "Legs"
+  },
+  {
+    "name": "Glute-Ham Raises",
+    "category": "Legs"
+  },
+  {
+    "name": "Hip Thrusts",
+    "category": "Legs"
+  },
+  {
+    "name": "Glute Bridges",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Kickbacks",
+    "category": "Legs"
+  },
+  {
+    "name": "Standing Calf Raises",
+    "category": "Legs"
+  },
+  {
+    "name": "Seated Calf Raises",
+    "category": "Legs"
+  },
+  {
+    "name": "Donkey Calf Raises",
+    "category": "Legs"
+  }
+]
