@@ -9,13 +9,13 @@ export default function Footer() {
       <div>
         <div className={styles.containerLinks}>
           <a href="https://github.com/ChrApostolidis" target="_blank" >
-            <FontAwesomeIcon icon={faGithub} size="2x" color="#fff"  />
+            <FontAwesomeIcon icon={faGithub} className={styles.icons} size="2x" color="#fff"  />
           </a>
           <a
             href="https://www.linkedin.com/in/xristos-apostolidis-5aa0912ab/"
             target="_blank"
           >
-            <FontAwesomeIcon icon={faLinkedin} size="2x" color="#fff" />
+            <FontAwesomeIcon icon={faLinkedin} className={styles.icons} size="2x" color="#fff" />
           </a>
         </div>
         <div className={styles.mainParagraph}>

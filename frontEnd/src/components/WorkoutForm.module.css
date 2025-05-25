@@ -1,0 +1,65 @@
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+}
+
+.goBackButton {
+  width: 200px;
+  height: 40px;
+}
+
+.containerButton {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categories {
+  display: flex;
+  gap: 20px;
+}
+
+.categories .contentCategories:hover {
+  border: 1px solid red;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.containerSet {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 10px 0;
+}
+
+.containerForButtons {
+  display: flex;
+  gap: 4px;
+}
+
+/*  new  */
+.exerciseList {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #fff;
+}
+.exerciseItem {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.exerciseItem:hover,
+.exerciseItem.selected {
+  background: #e0e0e0;
+  font-weight: bold;
+}
+
+.selectCategory p {
+  margin: 1rem 0;
+  color: #888;
+  text-align: center;
+}

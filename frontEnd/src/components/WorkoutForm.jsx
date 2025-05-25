@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ShowExercises from "./ShowExercises";
 import { useEffect } from "react";
+import styles from "./WorkoutForm.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function WorkoutForm() {
   const navigate = useNavigate();
@@ -17,8 +20,8 @@ export default function WorkoutForm() {
   });
 
   const [categories, setCategories] = useState([]);
-
   const [exercises, setExercises] = useState([]);
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
   useEffect(() => {
     axios.get("/api/categories").then((res) => setCategories(res.data));
@@ -79,106 +82,115 @@ export default function WorkoutForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-4 max-w-xl mx-auto">
-        <h2 className="text-xl font-bold">Log a Workout</h2>
+      <div className={styles.mainContainer}>
+        <form onSubmit={handleSubmit}>
+          <h2>Log an Exercise</h2>
 
-        <div>
-          {categories.map((cat) => (
-            <div
-              key={cat.name}
-              onClick={() =>
-                setExerciseForm({ ...exerciseForm, category: cat.name })
-              }
-            >
-              <img
-                src={`http://localhost:5000${cat.imageUrl}`}
-                alt={cat.name}
-                width={50}
-                height={50}
-              />
-              <div>{cat.name}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="border p-4 rounded bg-gray-100">
-          <input
-            name="category"
-            value={exerciseForm.category}
-            onChange={handleExerciseFormChange}
-            placeholder="Category"
-            type="hidden"
-          />
-
-          {/* <input
-            name="name"
-            value={exerciseForm.name}
-            onChange={handleExerciseFormChange}
-            placeholder="Exercise Name"
-            className="w-full mb-2 border px-3 py-1 rounded"
-          /> */}
-
-          <select
-            name="name"
-            value={exerciseForm.name}
-            onChange={handleExerciseFormChange}
-          >
-            <option value="">Select Exercise</option>
-            {exercises
-              .filter((ex) => ex.category === exerciseForm.category) // show only exercises for the selected category
-              .map((ex) => (
-                <option key={ex._id} value={ex.name}>
-                  {ex.name}
-                </option>
-              ))}
-          </select>
-
-          {exerciseForm.sets.map((set, setIndex) => (
-            <div key={setIndex}>
-              <input
-                type="number"
-                name="reps"
-                value={set.reps}
-                onChange={(e) => handleSetFormChange(setIndex, e)}
-                placeholder="Reps"
-                className="w-1/2 border px-2 py-1 rounded"
-              />
-              <input
-                type="number"
-                name="weight"
-                value={set.weight}
-                onChange={(e) => handleSetFormChange(setIndex, e)}
-                placeholder="Weight"
-                className="w-1/2 border px-2 py-1 rounded"
-              />
-              <button
-                type="button"
-                onClick={() => removeSetFromForm(setIndex)}
-                className="text-sm mt-2 text-blue-600"
+          <div className={styles.categories}>
+            {categories.map((cat) => (
+              <div
+                key={cat.name}
+                onClick={() =>
+                  setExerciseForm({ ...exerciseForm, category: cat.name })
+                }
               >
-                Remove Set
-              </button>
-            </div>
-          ))}
+                <div className={styles.contentCategories}>
+                  <img
+                    src={`http://localhost:5000${cat.imageUrl}`}
+                    alt={cat.name}
+                    width={50}
+                    height={50}
+                  />
+                  <div>{cat.name}</div>
+                </div>
+              </div>
+            ))}
+          </div>
 
-          <button
-            type="button"
-            onClick={addSetToForm}
-            className="text-sm mt-2 text-blue-600"
-          >
-            Add Set
+          <div>
+            <input
+              name="category"
+              value={exerciseForm.category}
+              onChange={handleExerciseFormChange}
+              placeholder="Category"
+              type="hidden"
+            />
+
+            {!exerciseForm.category && (
+              <div className={styles.selectCategory}>
+                <p>Please select a category to see available exercises.</p>
+              </div>
+            )}
+
+            {exerciseForm.category && (
+              <div className={styles.exerciseList}>
+                {exercises
+                  .filter((ex) => ex.category === exerciseForm.category)
+                  .map((ex) => (
+                    <div
+                      key={ex._id}
+                      className={`${styles.exerciseItem} ${
+                        selectedExercise === ex.name ? styles.selected : ""
+                      }`}
+                      onClick={() => {
+                        setExerciseForm({ ...exerciseForm, name: ex.name });
+                        setSelectedExercise(ex.name);
+                      }}
+                    >
+                      {ex.name}
+                    </div>
+                  ))}
+              </div>
+            )}
+            {exerciseForm.name && (
+              <>
+                {exerciseForm.sets.map((set, setIndex) => (
+                  <div key={setIndex} className={styles.containerSet}>
+                    <input
+                      type="number"
+                      name="reps"
+                      value={set.reps}
+                      onChange={(e) => handleSetFormChange(setIndex, e)}
+                      placeholder="Reps"
+                    />
+                    <input
+                      type="number"
+                      name="weight"
+                      value={set.weight}
+                      onChange={(e) => handleSetFormChange(setIndex, e)}
+                      placeholder="Weight"
+                    />
+                    <div className={styles.containerForButtons}>
+                      <button type="button" onClick={addSetToForm}>
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeSetFromForm(setIndex)}
+                      >
+                        <FontAwesomeIcon icon={faXmark} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+
+          <button type="button" onClick={addExercise}>
+            Add Exercise
           </button>
-        </div>
 
-        <button type="button" onClick={addExercise}>
-          Add Exercise
+          <button type="submit">Save Workout</button>
+        </form>
+
+        <ShowExercises exercises={workout.exercises} />
+      </div>
+      <div className={styles.containerButton}>
+        <button className={styles.goBackButton} onClick={() => navigate("/")}>
+          Go Back
         </button>
-
-        <button type="submit">Save Workout</button>
-      </form>
-
-      <ShowExercises exercises={workout.exercises} />
-      <button onClick={() => navigate("/")}>Go Back</button>
+      </div>
     </>
   );
 }
