@@ -94,14 +94,22 @@ export default function WorkoutForm() {
                   setExerciseForm({ ...exerciseForm, category: cat.name })
                 }
               >
-                <div className={styles.contentCategories}>
+                <div
+                  className={`${styles.contentCategories} ${
+                    exerciseForm.category === cat.name
+                      ? styles.selectedCategory
+                      : ""
+                  }`}
+                >
                   <img
                     src={`http://localhost:5000${cat.imageUrl}`}
                     alt={cat.name}
-                    width={50}
-                    height={50}
+                    width={80}
+                    height={80}
                   />
-                  <div>{cat.name}</div>
+                  <div>
+                    <p className={styles.contentName}> {cat.name}</p>
+                  </div>
                 </div>
               </div>
             ))}
