@@ -15,7 +15,9 @@ export default function Home() {
         </p>
         <button
           className={styles.mainButton}
-          onClick={() => navigate("/start-workout")}
+          onClick={() =>
+            navigate("/start-workout", { state: { startTimer: true } })
+          }
         >
           Start your Workout
         </button>

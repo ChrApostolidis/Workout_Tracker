@@ -5,7 +5,7 @@ export default function ShowExercises({ exercises }) {
     <div className={styles.summaryContainer}>
       <h3>Current Workout Summary</h3>
       {exercises.length === 0 ? (
-        <p>No exercises added yet.</p>
+        <p className={styles.center}>No exercises added yet.</p>
       ) : (
         <ul className={styles.exerciseList}>
           {exercises.map((exercise, exIndex) => (

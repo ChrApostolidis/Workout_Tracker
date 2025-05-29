@@ -1,19 +1,15 @@
 .mainContainer {
   display: flex;
   justify-content: center;
-  gap: 200px;
-}
-
-.goBackButton {
-  width: 200px;
-  height: 40px;
+  gap: 400px;
 }
 
 .containerButton {
   margin-top: 20px;
+  height: 30%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: flex-end;
 }
 
 .categories {
@@ -85,4 +81,103 @@
   margin: 1rem 0;
   color: #888;
   text-align: center;
+}
+
+.goBackButton {
+  align-items: center;
+  background-color: #0077b6;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: 150px;
+}
+
+.goBackButton:hover,
+.goBackButton:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: #006ea8 0 4px 12px;
+}
+
+.goBackButton:hover {
+  transform: translateY(-1px);
+}
+
+.goBackButton:active {
+  background-color: #006ea8;
+  color: #fff;
+}
+
+.containerForButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttonAddEx,
+.buttonSave {
+  background-color: #f8f9fa;
+  border: 1px solid #f8f9fa;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+  font-family: arial, sans-serif;
+  font-size: 14px;
+  height: 36px;
+  line-height: 27px;
+  min-width: 54px;
+  padding: 0 16px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: pre;
+}
+
+.buttonAddEx:hover,
+.buttonSave:hover {
+  border-color: #dadce0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 1px 1px;
+  color: #202124;
+  border-color: #4285f4;
+}
+
+.containerSet input {
+  padding: 12px 16px;
+  width: 100%;
+  max-width: 400px;
+
+  border: 2px solid #ccc;
+  border-radius: 8px;
+
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  outline: none;
+}
+
+.containerSet input:focus {
+  border-color: #0077b6;
+  box-shadow: 0 0 0 4px rgba(0, 119, 182, 0.2);
+}
+
+.containerSet input::placeholder {
+  color: #888;
 }

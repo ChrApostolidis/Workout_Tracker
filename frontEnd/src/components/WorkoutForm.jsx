@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import ShowExercises from "./ShowExercises";
-import { useEffect } from "react";
-import styles from "./WorkoutForm.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 
+import styles from "./WorkoutForm.module.css";
+import Timer from "./Timer";
+import ShowExercises from "./ShowExercises";
+
 export default function WorkoutForm() {
+  const location = useLocation();
+
   const navigate = useNavigate();
   const [workout, setWorkout] = useState({
     exercises: [],
@@ -22,6 +25,12 @@ export default function WorkoutForm() {
   const [categories, setCategories] = useState([]);
   const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(null);
+
+  // Timer
+  const [timerRunning, setTimerRunning] = useState(
+    location.state?.startTimer || false
+  );
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
     axios.get("/api/categories").then((res) => setCategories(res.data));
@@ -56,6 +65,7 @@ export default function WorkoutForm() {
 
   // Add exercise to workout
   const addExercise = () => {
+    if (!timerRunning) setTimerRunning(true);
     setWorkout({
       ...workout,
       exercises: [...workout.exercises, exerciseForm],
@@ -70,18 +80,33 @@ export default function WorkoutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTimerRunning(false);
     try {
-      await axios.post("/api/workouts/", workout);
+      await axios.post("/api/workouts/", {
+        ...workout,
+        duration: elapsedTime,
+      });
       setWorkout({ exercises: [] });
-      alert("Workout logged!");
+      alert("Another workout in the books keep up the good work!!");
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("Error saving workout");
     }
   };
 
+  // Making sure the user doesn't lose his progress
+  useEffect(() => {
+    window.onbeforeunload = () =>
+      "Refreshing will reset your workout progress!";
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, []);
+
   return (
     <>
+      <Timer running={timerRunning} onStop={setElapsedTime} />
       <div className={styles.mainContainer}>
         <form onSubmit={handleSubmit}>
           <h2>Log an Exercise</h2>
@@ -185,17 +210,36 @@ export default function WorkoutForm() {
             )}
           </div>
 
-          <button type="button" onClick={addExercise}>
-            Add Exercise
-          </button>
+          <div className={styles.containerForButtons}>
+            <button
+              type="button"
+              className={styles.buttonAddEx}
+              onClick={addExercise}
+            >
+              Add Exercise
+            </button>
 
-          <button type="submit">Save Workout</button>
+            <button type="submit" className={styles.buttonSave}>
+              Save Workout
+            </button>
+          </div>
         </form>
 
         <ShowExercises exercises={workout.exercises} />
       </div>
       <div className={styles.containerButton}>
-        <button className={styles.goBackButton} onClick={() => navigate("/")}>
+        <button
+          className={styles.goBackButton}
+          onClick={(e) => {
+            e.preventDefault();
+            const confirmLeave = window.confirm(
+              "Please make sure to save your workout before going back,all your progress will be lost. Are you sure you want to leave?"
+            );
+            if (confirmLeave) {
+              navigate("/");
+            }
+          }}
+        >
           Go Back
         </button>
       </div>
