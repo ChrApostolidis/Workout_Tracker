@@ -83,7 +83,7 @@
   text-align: center;
 }
 
-.goBackButton {
+.buttonSave {
   align-items: center;
   background-color: #0077b6;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -107,20 +107,20 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: baseline;
-  width: 150px;
+  width: 170px;
 }
 
-.goBackButton:hover,
-.goBackButton:focus {
+.buttonSave:hover,
+.buttonSave:focus {
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: #006ea8 0 4px 12px;
 }
 
-.goBackButton:hover {
+.buttonSave:hover {
   transform: translateY(-1px);
 }
 
-.goBackButton:active {
+.buttonSave:active {
   background-color: #006ea8;
   color: #fff;
 }
@@ -128,11 +128,10 @@
 .containerForButtons {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
-.buttonAddEx,
-.buttonSave {
+.buttonAddEx {
   background-color: #f8f9fa;
   border: 1px solid #f8f9fa;
   border-radius: 4px;
@@ -151,8 +150,7 @@
   white-space: pre;
 }
 
-.buttonAddEx:hover,
-.buttonSave:hover {
+.buttonAddEx:hover {
   border-color: #dadce0;
   box-shadow: rgba(0, 0, 0, 0.1) 0 1px 1px;
   color: #202124;

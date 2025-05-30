@@ -184,10 +184,6 @@
     "category": "Shoulder"
   },
   {
-    "name": "Plank",
-    "category": "Core"
-  },
-  {
     "name": "Crunches",
     "category": "Core"
   },
@@ -204,27 +200,11 @@
     "category": "Core"
   },
   {
-    "name": "Bicycle Crunches",
-    "category": "Core"
-  },
-  {
-    "name": "Mountain Climbers",
-    "category": "Core"
-  },
-  {
     "name": "Cable Crunches",
     "category": "Core"
   },
   {
     "name": "V-Ups",
-    "category": "Core"
-  },
-  {
-    "name": "Ab Wheel Rollouts",
-    "category": "Core"
-  },
-  {
-    "name": "Side Planks",
     "category": "Core"
   },
   {

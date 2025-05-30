@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "./Timer.module.css"
+import styles from "./Timer.module.css";
+import { formatTime } from "../utils/time";
+import { useNavigate } from "react-router-dom";
 
 export default function Timer({ running, onStop }) {
+  const navigate = useNavigate();
   const [seconds, setSeconds] = useState(0);
   const intervalRef = useRef(null);
 
@@ -18,17 +21,25 @@ export default function Timer({ running, onStop }) {
     return () => clearInterval(intervalRef.current);
   }, [running]);
 
-  // Format seconds to hh:mm:ss
-  const formatTime = (s) => {
-    const hrs = String(Math.floor(s / 3600)).padStart(2, "0");
-    const min = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
-    const sec = String(s % 60).padStart(2, "0");
-    return `${hrs}:${min}:${sec}`;
-  };
-
   return (
-    <div className={styles.timerContainer}>
-      <span>{formatTime(seconds)}</span>
-    </div>
+    <>
+      <div className={styles.timerContainer}>
+        <button
+          className={styles.goBackButton}
+          onClick={(e) => {
+            e.preventDefault();
+            const confirmLeave = window.confirm(
+              "Please make sure to save your workout before going back,all your progress will be lost. Are you sure you want to leave?"
+            );
+            if (confirmLeave) {
+              navigate("/");
+            }
+          }}
+        >
+          Go Back
+        </button>
+        <span>{formatTime(seconds)}</span>
+      </div>
+    </>
   );
 }

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { formatTime } from "../utils/time";
 
 import styles from "./WorkoutForm.module.css";
 import Timer from "./Timer";
@@ -30,8 +31,8 @@ export default function WorkoutForm() {
   const [timerRunning, setTimerRunning] = useState(
     location.state?.startTimer || false
   );
-  const [elapsedTime, setElapsedTime] = useState(0);
 
+  // Fetching data from the backend
   useEffect(() => {
     axios.get("/api/categories").then((res) => setCategories(res.data));
   }, []);
@@ -78,23 +79,6 @@ export default function WorkoutForm() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setTimerRunning(false);
-    try {
-      await axios.post("/api/workouts/", {
-        ...workout,
-        duration: elapsedTime,
-      });
-      setWorkout({ exercises: [] });
-      alert("Another workout in the books keep up the good work!!");
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert("Error saving workout");
-    }
-  };
-
   // Making sure the user doesn't lose his progress
   useEffect(() => {
     window.onbeforeunload = () =>
@@ -104,13 +88,34 @@ export default function WorkoutForm() {
     };
   }, []);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setTimerRunning(false);
+  };
+
+  const handleTimerStop = (finalElapsedTime) => {
+    axios
+      .post("/api/workouts/", {
+        ...workout,
+        duration: formatTime(finalElapsedTime),
+      })
+      .then(() => {
+        setWorkout({ exercises: [] });
+        alert("Another workout in the books keep up the good work!!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error saving workout");
+      });
+  };
+
   return (
     <>
-      <Timer running={timerRunning} onStop={setElapsedTime} />
+      <Timer running={timerRunning} onStop={handleTimerStop} />
       <div className={styles.mainContainer}>
         <form onSubmit={handleSubmit}>
           <h2>Log an Exercise</h2>
-
           <div className={styles.categories}>
             {categories.map((cat) => (
               <div
@@ -139,7 +144,6 @@ export default function WorkoutForm() {
               </div>
             ))}
           </div>
-
           <div>
             <input
               name="category"
@@ -209,7 +213,6 @@ export default function WorkoutForm() {
               </>
             )}
           </div>
-
           <div className={styles.containerForButtons}>
             <button
               type="button"
@@ -218,30 +221,14 @@ export default function WorkoutForm() {
             >
               Add Exercise
             </button>
-
+          </div>
+          <ShowExercises exercises={workout.exercises} />
+          <div className={styles.containerButton}>
             <button type="submit" className={styles.buttonSave}>
               Save Workout
             </button>
           </div>
         </form>
-
-        <ShowExercises exercises={workout.exercises} />
-      </div>
-      <div className={styles.containerButton}>
-        <button
-          className={styles.goBackButton}
-          onClick={(e) => {
-            e.preventDefault();
-            const confirmLeave = window.confirm(
-              "Please make sure to save your workout before going back,all your progress will be lost. Are you sure you want to leave?"
-            );
-            if (confirmLeave) {
-              navigate("/");
-            }
-          }}
-        >
-          Go Back
-        </button>
       </div>
     </>
   );

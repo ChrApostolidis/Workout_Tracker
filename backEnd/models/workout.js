@@ -17,6 +17,7 @@ const workoutSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  duration: String,
 });
 
 module.exports = mongoose.model("Workout", workoutSchema);
