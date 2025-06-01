@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  /* min-height: 80vh; */
 }
 
 .appContent {
@@ -33,7 +33,7 @@ h1 {
 .mainButton {
   align-items: center;
   background-clip: padding-box;
-  background-color: #fa6400;
+  background-color: #0077b6;
   border: 1px solid transparent;
   border-radius: .25rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
@@ -60,7 +60,7 @@ h1 {
 
 .mainButton:hover,
 .mainButton:focus {
-  background-color: #fb8332;
+  background-color: #006ea8;
   box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 }
 
@@ -69,7 +69,48 @@ h1 {
 }
 
 .mainButton:active {
-  background-color: #c85000;
+  background-color: #006ea8;
   box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
   transform: translateY(0);
+}
+
+/* Media */
+@media (max-width: 800px) {
+  h1 {
+    font-size: 50px;
+  }
+  .centerContent {
+    max-width: 100%;
+    padding: 1.2rem 0.5rem;
+    text-align: center;
+  }
+  .mainButton {
+    width: 200px;
+    font-size: 1.1rem;
+    padding: 0.9rem 0;
+    border-radius: 14px;
+  }
+  .mainParagraph {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 426px) {
+  .centerContent {
+    padding: 0.7rem 0.1rem;
+  }
+
+  .mainButton {
+    width: 150px;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 3.2rem;
+  }
+  .mainParagraph {
+    font-size: 0.97rem;
+  }
 }

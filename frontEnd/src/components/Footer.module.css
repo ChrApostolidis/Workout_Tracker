@@ -23,7 +23,7 @@
 
 @media (max-width: 500px) {
   .containerFooter {
-    padding: 0.7rem 0.2rem;
+    /* padding: 0.7rem 0.2rem; */
     font-size: 0.95rem;
   }
 

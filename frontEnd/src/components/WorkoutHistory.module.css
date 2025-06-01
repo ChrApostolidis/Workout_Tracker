@@ -1,0 +1,84 @@
+.workoutsList {
+  margin: 2rem auto;
+  max-width: 900px;
+  background: #f7fafd;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.07);
+}
+
+.workoutsList h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+}
+
+.workoutCard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(25, 118, 210, 0.08);
+  padding: 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: box-shadow 0.18s, transform 0.12s;
+}
+
+.workoutCard:hover {
+  box-shadow: 0 4px 18px rgba(25, 118, 210, 0.15);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+
+.cardDate {
+  font-weight: 600;
+  color: #334155;
+  font-size: 1.08rem;
+}
+
+.cardDuration {
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 8px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+}
+
+.cardBody {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.cardExercises {
+  color: #475569;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .workoutsList {
+    padding: 1rem 0.3rem;
+  }
+  .cardGrid {
+    gap: 0.7rem;
+  }
+  .workoutCard {
+    padding: 0.8rem 0.5rem;
+  }
+}

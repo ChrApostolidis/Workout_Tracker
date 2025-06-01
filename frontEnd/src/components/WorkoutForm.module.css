@@ -241,7 +241,6 @@
 }
 
 /* Mobile Media */
-
 @media (max-width: 770px) {
   .mainContainer {
     flex-direction: column;
@@ -266,6 +265,26 @@
     width: 50px !important;
     height: 50px !important;
   }
+
+  .containerSet input {
+    font-size: 0.97rem;
+    padding: 8px 10px;
+    max-width: 200px;
+  }
+  .buttonDeleteSet {
+    width: 26px;
+    height: 26px;
+    font-size: 0.97rem;
+    margin-left: 0.3rem;
+  }
+  .buttonAddSet,
+  .buttonAddEx,
+  .buttonSave {
+    font-size: 0.97rem;
+    padding: 0.5rem 1rem;
+    min-height: 2.3rem;
+    width: 140px;
+  }
 }
 
 /* Mobile */
@@ -285,5 +304,25 @@
   .contentCategories img {
     width: 40px !important;
     height: 40px !important;
+  }
+  .buttonAddSet,
+  .buttonAddEx,
+  .buttonSave {
+    font-size: 0.93rem;
+    padding: 0.4rem 0.7rem;
+    min-height: 2rem;
+    width: 110px;
+  }
+
+  .containerSet input {
+    font-size: 0.91rem;
+    padding: 6px 6px;
+    max-width: 150px;
+  }
+  .buttonDeleteSet {
+    width: 22px;
+    height: 22px;
+    font-size: 0.91rem;
+    margin-left: 0.2rem;
   }
 }
