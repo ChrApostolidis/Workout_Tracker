@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./Timer.module.css";
 import { formatTime } from "../utils/time";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Timer({ running, onStop }) {
   const navigate = useNavigate();
@@ -22,24 +24,22 @@ export default function Timer({ running, onStop }) {
   }, [running]);
 
   return (
-    <>
-      <div className={styles.timerContainer}>
-        <button
-          className={styles.goBackButton}
-          onClick={(e) => {
-            e.preventDefault();
-            const confirmLeave = window.confirm(
-              "Please make sure to save your workout before going back,all your progress will be lost. Are you sure you want to leave?"
-            );
-            if (confirmLeave) {
-              navigate("/");
-            }
-          }}
-        >
-          Go Back
-        </button>
-        <span>{formatTime(seconds)}</span>
-      </div>
-    </>
+   <div className={styles.timerBar}>
+    <button
+      className={styles.goBackButton}
+      onClick={(e) => {
+        e.preventDefault();
+        const confirmLeave = window.confirm(
+          "Please make sure to save your workout before going back, all your progress will be lost. Are you sure you want to leave?"
+        );
+        if (confirmLeave) {
+          navigate("/");
+        }
+      }}
+    >
+      <FontAwesomeIcon icon={faArrowLeft} />
+    </button>
+    <div className={styles.timerText}>{formatTime(seconds)}</div>
+  </div>
   );
 }

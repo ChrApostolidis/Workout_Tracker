@@ -20,3 +20,19 @@
 .mainParagraph {
   color: #fff;
 }
+
+@media (max-width: 500px) {
+  .containerFooter {
+    padding: 0.7rem 0.2rem;
+    font-size: 0.95rem;
+  }
+
+  .containerLinks {
+    gap: 6px;
+  }
+
+  .mainParagraph {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+}

@@ -5,6 +5,31 @@ const Workout = require('../models/workout');
 
 // Create workout
 router.post('/', async (req, res) => {
+  // const { exercises } = req.body;
+
+  // // Validation: Each exercise must have at least one set with reps and weight
+  // if (!exercises || !Array.isArray(exercises) || exercises.length === 0) {
+  //   return res.status(400).json({ error: "At least one exercise is required." });
+  // }
+
+  // for (const ex of exercises) {
+  //   if (!ex.sets || !Array.isArray(ex.sets) || ex.sets.length === 0) {
+  //     return res.status(400).json({ error: `Exercise "${ex.name}" must have at least one set.` });
+  //   }
+  //   for (const set of ex.sets) {
+  //     if (
+  //       set.reps === undefined ||
+  //       set.weight === undefined ||
+  //       set.reps === "" ||
+  //       set.weight === "" ||
+  //       isNaN(Number(set.reps)) ||
+  //       isNaN(Number(set.weight))
+  //     ) {
+  //       return res.status(400).json({ error: `All sets for "${ex.name}" must have reps and weight.` });
+  //     }
+  //   }
+  // }
+
   try {
     console.log(req.body);
     const workout = new Workout(req.body);

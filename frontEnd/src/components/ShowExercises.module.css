@@ -44,3 +44,29 @@
 .center {
   text-align: center;
 }
+
+@media (max-width: 770px) {
+  .summaryContainer {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 425px) {
+  .summaryContainer {
+    padding: 0.5rem;
+    font-size: 0.97rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+  }
+  .exerciseList {
+    font-size: 0.95rem;
+  }
+}

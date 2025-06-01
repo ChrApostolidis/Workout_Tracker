@@ -113,122 +113,137 @@ export default function WorkoutForm() {
   return (
     <>
       <Timer running={timerRunning} onStop={handleTimerStop} />
-      <div className={styles.mainContainer}>
-        <form onSubmit={handleSubmit}>
-          <h2>Log an Exercise</h2>
-          <div className={styles.categories}>
-            {categories.map((cat) => (
-              <div
-                key={cat.name}
-                onClick={() =>
-                  setExerciseForm({ ...exerciseForm, category: cat.name })
-                }
-              >
-                <div
-                  className={`${styles.contentCategories} ${
-                    exerciseForm.category === cat.name
-                      ? styles.selectedCategory
-                      : ""
-                  }`}
-                >
-                  <img
-                    src={`http://localhost:5000${cat.imageUrl}`}
-                    alt={cat.name}
-                    width={80}
-                    height={80}
-                  />
-                  <div>
-                    <p className={styles.contentName}> {cat.name}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div>
-            <input
-              name="category"
-              value={exerciseForm.category}
-              onChange={handleExerciseFormChange}
-              placeholder="Category"
-              type="hidden"
-            />
-
-            {!exerciseForm.category && (
-              <div className={styles.selectCategory}>
-                <p>Please select a category to see available exercises.</p>
-              </div>
-            )}
-
-            {exerciseForm.category && (
-              <div className={styles.exerciseList}>
-                {exercises
-                  .filter((ex) => ex.category === exerciseForm.category)
-                  .map((ex) => (
+      <div className={styles.workoutFormWrapper}>
+        <div className={styles.mainContainer}>
+          <div className={styles.leftPane}>
+            <form onSubmit={handleSubmit}>
+              <div className={styles.flexfornow}>
+                <h2>Log an Exercise</h2>
+                <div className={styles.categories}>
+                  {categories.map((cat) => (
                     <div
-                      key={ex._id}
-                      className={`${styles.exerciseItem} ${
-                        selectedExercise === ex.name ? styles.selected : ""
-                      }`}
-                      onClick={() => {
-                        setExerciseForm({ ...exerciseForm, name: ex.name });
-                        setSelectedExercise(ex.name);
-                      }}
+                      key={cat.name}
+                      onClick={() =>
+                        setExerciseForm({ ...exerciseForm, category: cat.name })
+                      }
                     >
-                      {ex.name}
+                      <div
+                        className={`${styles.contentCategories} ${
+                          exerciseForm.category === cat.name
+                            ? styles.selectedCategory
+                            : ""
+                        }`}
+                      >
+                        <img
+                          src={`http://localhost:5000${cat.imageUrl}`}
+                          alt={cat.name}
+                          width={80}
+                          height={80}
+                        />
+                        <div>
+                          <p className={styles.contentName}> {cat.name}</p>
+                        </div>
+                      </div>
                     </div>
                   ))}
-              </div>
-            )}
-            {exerciseForm.name && (
-              <>
-                {exerciseForm.sets.map((set, setIndex) => (
-                  <div key={setIndex} className={styles.containerSet}>
-                    <input
-                      type="number"
-                      name="reps"
-                      value={set.reps}
-                      onChange={(e) => handleSetFormChange(setIndex, e)}
-                      placeholder="Reps"
-                    />
-                    <input
-                      type="number"
-                      name="weight"
-                      value={set.weight}
-                      onChange={(e) => handleSetFormChange(setIndex, e)}
-                      placeholder="Weight"
-                    />
-                    <div className={styles.containerForButtons}>
-                      <button type="button" onClick={addSetToForm}>
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => removeSetFromForm(setIndex)}
-                      >
-                        <FontAwesomeIcon icon={faXmark} />
-                      </button>
+                </div>
+                <div>
+                  <input
+                    name="category"
+                    value={exerciseForm.category}
+                    onChange={handleExerciseFormChange}
+                    placeholder="Category"
+                    type="hidden"
+                  />
+
+                  {!exerciseForm.category && (
+                    <div className={styles.selectCategory}>
+                      <p>
+                        Please select a category to see available exercises.
+                      </p>
                     </div>
-                  </div>
-                ))}
-              </>
-            )}
+                  )}
+
+                  {exerciseForm.category && (
+                    <div className={styles.exerciseList}>
+                      {exercises
+                        .filter((ex) => ex.category === exerciseForm.category)
+                        .map((ex) => (
+                          <div
+                            key={ex._id}
+                            className={`${styles.exerciseItem} ${
+                              selectedExercise === ex.name
+                                ? styles.selected
+                                : ""
+                            }`}
+                            onClick={() => {
+                              setExerciseForm({
+                                ...exerciseForm,
+                                name: ex.name,
+                              });
+                              setSelectedExercise(ex.name);
+                            }}
+                          >
+                            {ex.name}
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                  {exerciseForm.name && (
+                    <>
+                      {exerciseForm.sets.map((set, setIndex) => (
+                        <div key={setIndex} className={styles.containerSet}>
+                          <input
+                            type="number"
+                            name="reps"
+                            value={set.reps}
+                            onChange={(e) => handleSetFormChange(setIndex, e)}
+                            placeholder="Reps"
+                          />
+                          <input
+                            type="number"
+                            name="weight"
+                            value={set.weight}
+                            onChange={(e) => handleSetFormChange(setIndex, e)}
+                            placeholder="Weight"
+                          />
+                          <div className={styles.containerForButtons}>
+                            <button type="button" onClick={addSetToForm}>
+                              <FontAwesomeIcon icon={faPlus} />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => removeSetFromForm(setIndex)}
+                            >
+                              <FontAwesomeIcon icon={faXmark} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+                <div className={styles.containerForButtons}>
+                  <button
+                    type="button"
+                    className={styles.buttonAddEx}
+                    onClick={addExercise}
+                  >
+                    Add Exercise
+                  </button>
+                </div>
+              </div>
+              <div className={styles.containerButton}>
+                <button type="submit" className={styles.buttonSave}>
+                  Save Workout
+                </button>
+              </div>
+            </form>
           </div>
-          <div className={styles.containerForButtons}>
-            <button
-              type="button"
-              className={styles.buttonAddEx}
-              onClick={addExercise}
-            >
-              Add Exercise
-            </button>
+          <div className={styles.rightPane}>
+            <ShowExercises exercises={workout.exercises} />
           </div>
-          <ShowExercises exercises={workout.exercises} />
-          <div className={styles.containerButton}>
-            <button type="submit" className={styles.buttonSave}>
-              Save Workout
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </>
   );
