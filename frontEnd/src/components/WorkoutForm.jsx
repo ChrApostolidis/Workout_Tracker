@@ -272,10 +272,7 @@ export default function WorkoutForm() {
                 </div>
               </div>
               <div className={styles.containerButton}>
-                <button
-                  type="submit"
-                  className={styles.buttonSave}
-                >
+                <button type="submit" className={styles.buttonSave}>
                   Save Workout
                 </button>
               </div>
