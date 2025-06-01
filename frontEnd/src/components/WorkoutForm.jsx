@@ -32,6 +32,9 @@ export default function WorkoutForm() {
     location.state?.startTimer || false
   );
 
+  // Error message
+  const [formError, setFormError] = useState("");
+
   // Fetching data from the backend
   useEffect(() => {
     axios.get("/api/categories").then((res) => setCategories(res.data));
@@ -66,6 +69,26 @@ export default function WorkoutForm() {
 
   // Add exercise to workout
   const addExercise = () => {
+    if (!exerciseForm.sets || exerciseForm.sets.length === 0) {
+      setFormError("Please add at least one set.");
+      return;
+    }
+    // Check that all sets have reps and weight
+    for (const set of exerciseForm.sets) {
+      const reps = Number(set.reps);
+      const weight = Number(set.weight);
+      if (
+        !set.reps ||
+        set.weight === "" || // allow 0, but not empty string
+        isNaN(reps) ||
+        isNaN(weight) ||
+        reps <= 0 ||
+        weight < 0
+      ) {
+        setFormError("Sets and Reps cannot be empty.");
+        return;
+      }
+    }
     if (!timerRunning) setTimerRunning(true);
     setWorkout({
       ...workout,
@@ -90,6 +113,12 @@ export default function WorkoutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (workout.exercises.length === 0) {
+      setFormError(
+        "Please add at least one exercise before saving your workout."
+      );
+      return;
+    }
     setTimerRunning(false);
   };
 
@@ -189,6 +218,9 @@ export default function WorkoutForm() {
                         ))}
                     </div>
                   )}
+                  {formError && (
+                    <div className={styles.errorMessage}>{formError}</div>
+                  )}
                   {exerciseForm.name && (
                     <>
                       {exerciseForm.sets.map((set, setIndex) => (
@@ -208,11 +240,9 @@ export default function WorkoutForm() {
                             placeholder="Weight"
                           />
                           <div className={styles.containerForButtons}>
-                            <button type="button" onClick={addSetToForm}>
-                              <FontAwesomeIcon icon={faPlus} />
-                            </button>
                             <button
                               type="button"
+                              className={styles.buttonDeleteSet}
                               onClick={() => removeSetFromForm(setIndex)}
                             >
                               <FontAwesomeIcon icon={faXmark} />
@@ -220,6 +250,14 @@ export default function WorkoutForm() {
                           </div>
                         </div>
                       ))}
+                      <button
+                        type="button"
+                        className={styles.buttonAddSet}
+                        onClick={addSetToForm}
+                      >
+                        <FontAwesomeIcon icon={faPlus} />
+                        Add Set
+                      </button>
                     </>
                   )}
                 </div>
@@ -234,7 +272,10 @@ export default function WorkoutForm() {
                 </div>
               </div>
               <div className={styles.containerButton}>
-                <button type="submit" className={styles.buttonSave}>
+                <button
+                  type="submit"
+                  className={styles.buttonSave}
+                >
                   Save Workout
                 </button>
               </div>
