@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import styles from "./Login.module.css";
+import Footer from "../components/Footer";
 
 export default function Login() {
   const { login, auth } = useAuth();
@@ -53,29 +54,35 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <form onSubmit={handleSubmit} className={styles.loginForm}>
-        <h2>Login</h2>
-        {error && <div className={styles.error}>{error}</div>}
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login</button>
-        <p className={styles.switchForm}>
-          Don't have an account? <a href="/register">Register</a>
-        </p>
-      </form>
+    <div className={styles.pageContainer}>
+      <div className={styles.header}>
+        <h1>Workout Tracker</h1>
+      </div>
+      <div className={styles.loginContainer}>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
+          <h2>Login</h2>
+          {error && <div className={styles.error}>{error}</div>}
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Login</button>
+          <p className={styles.switchForm}>
+            Don't have an account? <a href="/register">Register</a>
+          </p>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 }
