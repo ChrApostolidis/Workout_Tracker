@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const workoutRoutes = require("./routes/workoutRoutes");
 const categories = require("./data/categories");
 const exerciseRoutes = require('./routes/exerciseRoutes');
+const authRoutes = require('./routes/authRoutes');
 const cors = require("cors");
 
 const app = express();
@@ -18,6 +19,8 @@ mongoose
 app.use("/api/workouts", workoutRoutes);
 app.use('/api/exercises', exerciseRoutes);
 app.use("/api/categories", categories);
+app.use('/api/auth', authRoutes);
+
 app.use('/images', express.static("public/images"));
 
 const PORT = process.env.PORT || 5000;

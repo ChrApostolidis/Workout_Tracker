@@ -11,13 +11,23 @@ const exerciseSchema = new mongoose.Schema({
   sets: [setSchema],
 });
 
-const workoutSchema = new mongoose.Schema({
-  exercises: [exerciseSchema],
-  date: {
-    type: Date,
-    default: Date.now,
+const workoutSchema = new mongoose.Schema(
+  {
+    exercises: [exerciseSchema],
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    duration: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  duration: String,
-});
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = mongoose.model("Workout", workoutSchema);

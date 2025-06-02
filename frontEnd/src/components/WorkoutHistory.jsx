@@ -1,22 +1,48 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import styles from "./WorkoutHistory.module.css";
 
 export default function WorkoutHistory() {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { auth } = useAuth();
 
   useEffect(() => {
-    fetch("/api/workouts")
-      .then((res) => res.json())
-      .then((data) => {
-        setWorkouts(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+    const fetchWorkouts = async () => {
+      try {
+        if (!auth.token) {
+          throw new Error('No authentication token found');
+        }
 
-  if (loading) return <div>Loading workouts...</div>;
-  if (!workouts.length) return <div>No workouts yet.</div>;
+        const res = await fetch("/api/workouts", {
+          headers: {
+            'Authorization': `Bearer ${auth.token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch workouts');
+        }
+
+        const data = await res.json();
+        console.log('Fetched workouts:', data);
+        setWorkouts(data);
+      } catch (err) {
+        console.error('Error fetching workouts:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorkouts();
+  }, [auth.token]); // Re-fetch when auth token changes
+
+  if (loading) return <div className={styles.message}>Loading workouts...</div>;
+  if (error) return <div className={styles.error}>{error}</div>;
+  if (!workouts.length) return <div className={styles.message}>No workouts yet.</div>;
 
   return (
     <div className={styles.workoutsList}>

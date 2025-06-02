@@ -100,6 +100,7 @@ export default function WorkoutForm() {
       category: "",
       sets: [{ reps: "", weight: "" }],
     });
+    setFormError(" ");
   };
 
   // Making sure the user doesn't lose his progress
@@ -111,6 +112,34 @@ export default function WorkoutForm() {
     };
   }, []);
 
+  const handleTimerStop = (finalElapsedTime) => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .post(
+        "/api/workouts/",
+        {
+          ...workout,
+          duration: formatTime(finalElapsedTime),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        setWorkout({ exercises: [] });
+        alert("Another workout in the books keep up the good work!!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("Error details:", err.response?.data || err);
+        setFormError(err.response?.data?.message || "Error saving workout");
+      });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (workout.exercises.length === 0) {
@@ -119,26 +148,9 @@ export default function WorkoutForm() {
       );
       return;
     }
+    // Stop the timer which will trigger handleTimerStop
     setTimerRunning(false);
   };
-
-  const handleTimerStop = (finalElapsedTime) => {
-    axios
-      .post("/api/workouts/", {
-        ...workout,
-        duration: formatTime(finalElapsedTime),
-      })
-      .then(() => {
-        setWorkout({ exercises: [] });
-        alert("Another workout in the books keep up the good work!!");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Error saving workout");
-      });
-  };
-
   return (
     <>
       <Timer running={timerRunning} onStop={handleTimerStop} />

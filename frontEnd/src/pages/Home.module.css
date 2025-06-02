@@ -27,7 +27,7 @@ h1 {
 
 .mainParagraph {
   font-size: 22px;
-  color : #f9fafb;
+  color: #f9fafb;
 }
 
 .mainButton {
@@ -35,7 +35,7 @@ h1 {
   background-clip: padding-box;
   background-color: #0077b6;
   border: 1px solid transparent;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   box-sizing: border-box;
   color: #fff;
@@ -47,7 +47,7 @@ h1 {
   line-height: 1.25;
   margin: 0;
   min-height: 3rem;
-  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
   position: relative;
   text-decoration: none;
   transition: all 250ms;
@@ -70,8 +70,30 @@ h1 {
 
 .mainButton:active {
   background-color: #006ea8;
-  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   transform: translateY(0);
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem;
+}
+
+.logoutButton {
+  background: transparent;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.logoutButton:hover {
+  background: #d32f2f;
+  color: white;
 }
 
 /* Media */
