@@ -7,7 +7,7 @@
 
 .header h1 {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 4rem;
+  font-size: 6rem;
   color: #f9fafb;
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -84,4 +84,50 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 4rem;
+    padding: 1rem 0;
+  }
+
+  .loginForm {
+    max-width: 300px; 
+    margin: 0 1rem;
+    padding: 1.2rem; 
+  }
+
+  .loginForm input {
+    width: 90%;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 3rem;
+  }
+
+  .loginForm {
+    max-width: 250px;
+    padding: 1rem;
+    margin: 0 0.5rem;
+  }
+
+  .loginForm h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .loginForm input {
+    width: 92%;
+    padding: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .loginForm button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
 }

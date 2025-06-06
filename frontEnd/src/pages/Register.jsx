@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import styles from "./Register.module.css";
 import Footer from "../components/Footer";
 
 export default function Register() {
-  const { login, auth } = useAuth();
+  const navigate = useNavigate();
+  const {  auth } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -52,8 +54,8 @@ export default function Register() {
         throw new Error(data.message || "Registration failed");
       }
 
-      // Use the login function from context to set auth state
-      login(data.token, data.user);
+      alert("Registration successful! Please login to continue.");
+      navigate("/login");
     } catch (err) {
       setError(err.message);
     }

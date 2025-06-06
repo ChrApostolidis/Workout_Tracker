@@ -36,6 +36,9 @@ export default function Home() {
           Start your Workout
         </button>
       </div>
+      <div className={styles.userWelcomeContainer}>
+        Welcome back {auth.user?.username}
+      </div>
       <WorkoutHistory />
       <Footer />
     </div>
