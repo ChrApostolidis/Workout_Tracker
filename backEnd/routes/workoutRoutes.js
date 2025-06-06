@@ -32,16 +32,16 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// // Get one workout
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const workout = await Workout.findById(req.params.id);
-//     if (!workout) return res.status(404).json({ message: 'Not found' });
-//     res.json(workout);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
+// Get one workout
+router.get('/:id', async (req, res) => {
+  try {
+    const workout = await Workout.findById(req.params.id);
+    if (!workout) return res.status(404).json({ message: 'Not found' });
+    res.json(workout);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // // Update workout
 // router.put('/:id', async (req, res) => {
@@ -53,14 +53,14 @@ router.get('/', auth, async (req, res) => {
 //   }
 // });
 
-// // Delete workout
-// router.delete('/:id', async (req, res) => {
-//   try {
-//     await Workout.findByIdAndDelete(req.params.id);
-//     res.json({ message: 'Workout deleted' });
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
+// Delete workout
+router.delete('/:id', async (req, res) => {
+  try {
+    await Workout.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Workout deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;

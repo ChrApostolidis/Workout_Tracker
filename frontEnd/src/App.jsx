@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import StartWorkout from './pages/StartWorkout';
+import WorkoutDetails from './pages/WorkoutDetails';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
         <Route 
           path="/start-workout" 
           element={<StartWorkout />} 
+        />
+        <Route 
+          path="/workout/:workoutId" 
+          element={<WorkoutDetails />} 
         />
       </Routes>
     </AuthProvider>
