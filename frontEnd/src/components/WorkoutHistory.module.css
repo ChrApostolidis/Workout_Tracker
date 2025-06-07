@@ -1,74 +1,84 @@
 .workoutsList {
+  max-width: 1200px;
   margin: 2rem auto;
-  max-width: 900px;
-  background: #f7fafd;
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.07);
+  padding: 0 1rem;
 }
 
 .workoutsList h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  color: #f9fafb;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .workoutCard {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 1px 6px rgba(25, 118, 210, 0.08);
-  padding: 1.2rem 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  padding: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  gap: 1rem;
 }
 
 .workoutCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.98);
 }
 
 .cardHeader {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
   align-items: center;
-  margin-bottom: 0.7rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid rgba(25, 118, 210, 0.2);
 }
 
 .cardDate {
+  font-size: 1rem;
   font-weight: 600;
-  color: #334155;
-  font-size: 1.08rem;
+  color: #2c3e50;
+  padding: 0.3rem 0.6rem;
+  background: rgba(25, 118, 210, 0.1);
+  border-radius: 5px;
 }
 
 .cardDuration {
-  background: #e3f2fd;
+  font-size: 1rem;
+  font-weight: 600;
   color: #1976d2;
-  border-radius: 8px;
-  padding: 0.2rem 0.7rem;
-  font-size: 0.98rem;
-  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  background: rgba(25, 118, 210, 0.1);
+  border-radius: 5px;
 }
 
 .cardBody {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
+  text-align: center;
+  padding: 0.6rem;
+  background: rgba(25, 118, 210, 0.05);
+  border-radius: 6px;
 }
 
 .cardExercises {
-  color: #475569;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
   font-weight: 500;
+  display: block;
+  padding: 0.3rem;
 }
 
 .message {
@@ -106,11 +116,27 @@
 }
 
 /* Add responsive styling */
+
+@media (max-width: 768px) {
+  .cardGrid {
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
+}
+
 @media (max-width: 600px) {
-  .message, .error {
+  .message,
+  .error {
     margin: 1rem;
     min-height: 150px;
     padding: 1.5rem;
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }

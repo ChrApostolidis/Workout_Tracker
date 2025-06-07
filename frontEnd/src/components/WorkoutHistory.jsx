@@ -13,10 +13,6 @@ export default function WorkoutHistory() {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        if (!auth.token) {
-          throw new Error("No authentication token found");
-        }
-
         const res = await fetch("/api/workouts", {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -29,7 +25,7 @@ export default function WorkoutHistory() {
         }
 
         const data = await res.json();
-        console.log("Fetched workouts:", data);
+        // Data is already sorted from the backend
         setWorkouts(data);
       } catch (err) {
         console.error("Error fetching workouts:", err);

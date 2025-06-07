@@ -25,9 +25,13 @@ router.post('/', auth, async (req, res) => {
 // Get all workouts
 router.get('/', auth, async (req, res) => {
   try {
-    const workouts = await Workout.find({ user: req.userId });
+    const workouts = await Workout.find({ user: req.userId })
+      .sort({ createdAt: -1 }) // Sort by creation date in descending order
+      .exec();
+    
     res.json(workouts);
   } catch (error) {
+    console.error('Error fetching workouts:', error);
     res.status(400).json({ message: error.message });
   }
 });
