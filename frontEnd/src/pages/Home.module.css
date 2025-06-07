@@ -97,12 +97,24 @@ h1 {
 
 .userWelcomeContainer {
   text-align: center;
-  padding: 1rem;
+  padding: 1.5rem;
+  margin: 1rem auto;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
   color: #f9fafb;
-  font-size: 3rem;
+  font-size: 1.8rem;
   font-weight: 500;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.userWelcomeContainer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Media */
@@ -128,8 +140,9 @@ h1 {
   }
 
   .userWelcomeContainer {
-    font-size: 1.2rem;
-    padding: 0.8rem;
+    font-size: 1.4rem;
+    padding: 1rem;
+    margin: 0.5rem 1rem;
   }
 }
 
