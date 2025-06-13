@@ -1,0 +1,146 @@
+.alertOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.alertBox {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: slideIn 0.3s ease;
+}
+
+.alertBox p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.closeButton {
+  padding: 0.8rem 2rem;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.closeButton:hover {
+  background: #1565c0;
+}
+
+/* Alert types */
+.success p {
+  color: #059669;
+}
+
+.error p {
+  color: #dc2626;
+}
+
+.warning p {
+  color: #d97706;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .alertBox {
+    width: 85%;
+    padding: 1.5rem;
+  }
+
+  .alertBox p {
+    font-size: 1rem;
+  }
+
+  .closeButton {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.alertButton {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.successButton {
+  background: #1976d2;
+  color: white;
+}
+
+.successButton:hover {
+  background: #1565c0;
+}
+
+.cancelButton {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+.cancelButton:hover {
+  background: #d1d5db;
+}
+
+.confirmButton {
+  background: #dc2626;
+  color: white;
+}
+
+.confirmButton:hover {
+  background: #b91c1c;
+}
+
+@media (max-width: 480px) {
+  .buttonContainer {
+    gap: 0.8rem;
+  }
+
+  .alertButton {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

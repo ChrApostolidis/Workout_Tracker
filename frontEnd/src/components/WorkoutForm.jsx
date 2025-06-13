@@ -8,9 +8,12 @@ import { formatTime } from "../utils/time";
 import styles from "./WorkoutForm.module.css";
 import Timer from "./Timer";
 import ShowExercises from "./ShowExercises";
+import CustomPopUp from "./CustomPopUp";
 
 export default function WorkoutForm() {
   const location = useLocation();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const navigate = useNavigate();
   const [workout, setWorkout] = useState({
@@ -131,8 +134,11 @@ export default function WorkoutForm() {
       )
       .then(() => {
         setWorkout({ exercises: [] });
-        alert("Another workout in the books keep up the good work!!");
-        navigate("/");
+        setAlertMessage("Your workout has been saved!");
+        setShowAlert(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000); // Wait for 2 seconds before navigating
       })
       .catch((err) => {
         console.error("Error details:", err.response?.data || err);
@@ -284,11 +290,21 @@ export default function WorkoutForm() {
                 </div>
               </div>
               <div className={styles.containerButton}>
-                <button type="submit" className={styles.buttonSave}>
+                <button
+                  type="submit"
+                  className={styles.buttonSave}
+                >
                   Save Workout
                 </button>
               </div>
             </form>
+            {showAlert && (
+              <CustomPopUp
+                message={alertMessage}
+                type="success" // can be 'success', 'error', or 'warning'
+                onClose={() => setShowAlert(false)}
+              />
+            )}
           </div>
           <div className={styles.rightPane}>
             <ShowExercises exercises={workout.exercises} />
