@@ -1,18 +1,30 @@
 const Workout = require("../models/workout");
+const User = require("../models/user");
 
 exports.postCreateWorkout = async (req, res) => {
   try {
-    console.log("Auth token:", req.header("Authorization"));
-    console.log("User ID:", req.userId);
-
+    // Create the workout
     const workout = new Workout({
       ...req.body,
       user: req.userId,
     });
-    const saved = await workout.save();
-    res.status(201).json(saved);
+
+    // Save the workout
+    const savedWorkout = await workout.save();
+
+    // Update the user's workouts array
+    await User.findByIdAndUpdate(
+      req.userId,
+      { $push: { workouts: savedWorkout._id } },
+      { new: true }
+    );
+
+    console.log("Workout saved:", savedWorkout);
+    console.log("User ID:", req.userId);
+
+    res.status(201).json(savedWorkout);
   } catch (err) {
-    console.error("Workout creation error:", err);
+    console.error("Error creating workout:", err);
     res.status(400).json({ message: err.message });
   }
 };

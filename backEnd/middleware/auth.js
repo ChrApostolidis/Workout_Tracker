@@ -7,7 +7,8 @@ const auth = async (req, res, next) => {
     req.userId = decoded.userId;
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Authentication required' });
+    console.error('Auth middleware error:', error);
+    res.status(401).json({ message: 'Please authenticate.' });
   }
 };
 
