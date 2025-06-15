@@ -34,8 +34,11 @@ export default function WorkoutForm() {
   const [timerRunning, setTimerRunning] = useState(
     location.state?.startTimer || false
   );
+  const [seconds, setSeconds] = useState(() => {
+    const savedTimer = localStorage.getItem('workoutTimer');
+    return savedTimer ? parseInt(savedTimer, 10) : 0;
+  });
 
-  // Error message
   const [formError, setFormError] = useState("");
 
   // Fetching data from the backend
@@ -82,7 +85,7 @@ export default function WorkoutForm() {
       const weight = Number(set.weight);
       if (
         !set.reps ||
-        set.weight === "" || // allow 0, but not empty string
+        set.weight === "" || 
         isNaN(reps) ||
         isNaN(weight) ||
         reps <= 0 ||
@@ -106,44 +109,57 @@ export default function WorkoutForm() {
     setFormError(" ");
   };
 
-  // Making sure the user doesn't lose his progress
+  // Save workout data on every change in case of reloading the page
   useEffect(() => {
-    window.onbeforeunload = () =>
-      "Refreshing will reset your workout progress!";
-    return () => {
-      window.onbeforeunload = null;
-    };
+    if (workout.exercises.length > 0) {
+      localStorage.setItem('currentWorkout', JSON.stringify({
+        exercises: workout.exercises,
+        timer: seconds
+      }));
+    }
+  }, [workout.exercises, seconds]);
+
+  // Load saved workout data on component mount
+  useEffect(() => {
+    const savedWorkout = localStorage.getItem('currentWorkout');
+    if (savedWorkout) {
+      const parsedWorkout = JSON.parse(savedWorkout);
+      setWorkout(prevWorkout => ({
+        ...prevWorkout,
+        exercises: parsedWorkout.exercises
+      }));
+      setSeconds(parsedWorkout.timer);
+    }
   }, []);
 
+  // Clear timer when workout is completed
   const handleTimerStop = (finalElapsedTime) => {
     const token = localStorage.getItem("token");
 
-    axios
-      .post(
-        "/api/workouts/",
-        {
-          ...workout,
-          duration: formatTime(finalElapsedTime),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then(() => {
-        setWorkout({ exercises: [] });
-        setAlertMessage("Your workout has been saved!");
-        setShowAlert(true);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000); // Wait for 2 seconds before navigating
-      })
-      .catch((err) => {
-        console.error("Error details:", err.response?.data || err);
-        setFormError(err.response?.data?.message || "Error saving workout");
-      });
+    axios.post("/api/workouts/", {
+      ...workout,
+      duration: formatTime(finalElapsedTime),
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then(() => {
+      localStorage.removeItem('workoutTimer'); 
+      localStorage.removeItem('currentWorkout'); 
+      setWorkout({ exercises: [] });
+      setSeconds(0);
+      setAlertMessage("Your workout has been saved!");
+      setShowAlert(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    })
+    .catch((err) => {
+      console.error("Error details:", err.response?.data || err);
+      setFormError(err.response?.data?.message || "Error saving workout");
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -154,7 +170,6 @@ export default function WorkoutForm() {
       );
       return;
     }
-    // Stop the timer which will trigger handleTimerStop
     setTimerRunning(false);
   };
   return (
