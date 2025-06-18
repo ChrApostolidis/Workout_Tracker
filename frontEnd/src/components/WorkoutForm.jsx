@@ -3,17 +3,19 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { formatTime } from "../utils/time";
+import { motion, AnimatePresence } from "framer-motion";
 
 import styles from "./WorkoutForm.module.css";
 import Timer from "./Timer";
 import ShowExercises from "./ShowExercises";
 import CustomPopUp from "./CustomPopUp";
+import { formatTime } from "../utils/time";
 
 export default function WorkoutForm() {
   const location = useLocation();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [shakeTrigger, setShakeTrigger] = useState(0);
 
   const navigate = useNavigate();
   const [workout, setWorkout] = useState({
@@ -35,7 +37,7 @@ export default function WorkoutForm() {
     location.state?.startTimer || false
   );
   const [seconds, setSeconds] = useState(() => {
-    const savedTimer = localStorage.getItem('workoutTimer');
+    const savedTimer = localStorage.getItem("workoutTimer");
     return savedTimer ? parseInt(savedTimer, 10) : 0;
   });
 
@@ -75,6 +77,8 @@ export default function WorkoutForm() {
 
   // Add exercise to workout
   const addExercise = () => {
+    // Re-trigger Animation
+    setShakeTrigger((prev) => prev + 1);
     if (!exerciseForm.sets || exerciseForm.sets.length === 0) {
       setFormError("Please add at least one set.");
       return;
@@ -83,14 +87,12 @@ export default function WorkoutForm() {
     for (const set of exerciseForm.sets) {
       const reps = Number(set.reps);
       const weight = Number(set.weight);
-      if (
-        !set.reps ||
-        set.weight === "" || 
-        isNaN(reps) ||
-        isNaN(weight) ||
-        reps <= 0 ||
-        weight < 0
-      ) {
+      if (set.weight < 0 || set.reps < 0) {
+        setFormError("You can't have negative Sets or Weights.");
+        return;
+      }
+
+      if (!set.reps || !set.weight || isNaN(reps) || isNaN(weight)) {
         setFormError("Sets and Reps cannot be empty.");
         return;
       }
@@ -112,21 +114,24 @@ export default function WorkoutForm() {
   // Save workout data on every change in case of reloading the page
   useEffect(() => {
     if (workout.exercises.length > 0) {
-      localStorage.setItem('currentWorkout', JSON.stringify({
-        exercises: workout.exercises,
-        timer: seconds
-      }));
+      localStorage.setItem(
+        "currentWorkout",
+        JSON.stringify({
+          exercises: workout.exercises,
+          timer: seconds,
+        })
+      );
     }
   }, [workout.exercises, seconds]);
 
   // Load saved workout data on component mount
   useEffect(() => {
-    const savedWorkout = localStorage.getItem('currentWorkout');
+    const savedWorkout = localStorage.getItem("currentWorkout");
     if (savedWorkout) {
       const parsedWorkout = JSON.parse(savedWorkout);
-      setWorkout(prevWorkout => ({
+      setWorkout((prevWorkout) => ({
         ...prevWorkout,
-        exercises: parsedWorkout.exercises
+        exercises: parsedWorkout.exercises,
       }));
       setSeconds(parsedWorkout.timer);
     }
@@ -136,30 +141,35 @@ export default function WorkoutForm() {
   const handleTimerStop = (finalElapsedTime) => {
     const token = localStorage.getItem("token");
 
-    axios.post("/api/workouts/", {
-      ...workout,
-      duration: formatTime(finalElapsedTime),
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then(() => {
-      localStorage.removeItem('workoutTimer'); 
-      localStorage.removeItem('currentWorkout'); 
-      setWorkout({ exercises: [] });
-      setSeconds(0);
-      setAlertMessage("Your workout has been saved!");
-      setShowAlert(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    })
-    .catch((err) => {
-      console.error("Error details:", err.response?.data || err);
-      setFormError(err.response?.data?.message || "Error saving workout");
-    });
+    axios
+      .post(
+        "/api/workouts/",
+        {
+          ...workout,
+          duration: formatTime(finalElapsedTime),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        localStorage.removeItem("workoutTimer");
+        localStorage.removeItem("currentWorkout");
+        setWorkout({ exercises: [] });
+        setSeconds(0);
+        setAlertMessage("Your workout has been saved!");
+        setShowAlert(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Error details:", err.response?.data || err);
+        setFormError(err.response?.data?.message || "Error saving workout");
+      });
   };
 
   const handleSubmit = async (e) => {
@@ -172,6 +182,7 @@ export default function WorkoutForm() {
     }
     setTimerRunning(false);
   };
+
   return (
     <>
       <Timer running={timerRunning} onStop={handleTimerStop} />
@@ -252,7 +263,17 @@ export default function WorkoutForm() {
                     </div>
                   )}
                   {formError && (
-                    <div className={styles.errorMessage}>{formError}</div>
+                    <AnimatePresence>
+                      <motion.div
+                        key={shakeTrigger}
+                        className={styles.errorMessage}
+                        initial={{ x: 0 }}
+                        animate={{ x: [0, -8, 8, -6, 6, -4, 4, 0] }} 
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                      >
+                        {formError}
+                      </motion.div>
+                    </AnimatePresence>
                   )}
                   {exerciseForm.name && (
                     <>
@@ -305,10 +326,7 @@ export default function WorkoutForm() {
                 </div>
               </div>
               <div className={styles.containerButton}>
-                <button
-                  type="submit"
-                  className={styles.buttonSave}
-                >
+                <button type="submit" className={styles.buttonSave}>
                   Save Workout
                 </button>
               </div>

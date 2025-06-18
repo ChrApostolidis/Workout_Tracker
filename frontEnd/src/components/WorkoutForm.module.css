@@ -192,11 +192,13 @@
   align-items: center;
 }
 
+/* Error message */
 .errorMessage {
   color: red;
   margin-bottom: 1rem;
   font-weight: bold;
   text-align: center;
+  animation: flashError 0.4s ease-out;
 }
 
 .buttonAddSet {
