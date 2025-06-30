@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +16,8 @@ export default function WorkoutForm() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [shakeTrigger, setShakeTrigger] = useState(0);
+
+  const timerRef = useRef(null);
 
   const navigate = useNavigate();
   const [workout, setWorkout] = useState({
@@ -180,12 +182,29 @@ export default function WorkoutForm() {
       );
       return;
     }
+
+    const elapsedSeconds = timerRef.current?.getSeconds() || 0;
+    handleTimerStop(elapsedSeconds);
     setTimerRunning(false);
+  };
+
+  const handleResetWorkout = () => {
+    setWorkout({ exercises: [] });
+    setSeconds(0);
+    setTimerRunning(false);
+    localStorage.removeItem("currentWorkout");
+    localStorage.removeItem("workoutTimer");
   };
 
   return (
     <>
-      <Timer running={timerRunning} onStop={handleTimerStop} />
+      <Timer
+        ref={timerRef}
+        running={timerRunning}
+        seconds={seconds}
+        setSeconds={setSeconds}
+        resetWorkout={handleResetWorkout}
+      />
       <div className={styles.workoutFormWrapper}>
         <div className={styles.mainContainer}>
           <div className={styles.leftPane}>
@@ -268,7 +287,7 @@ export default function WorkoutForm() {
                         key={shakeTrigger}
                         className={styles.errorMessage}
                         initial={{ x: 0 }}
-                        animate={{ x: [0, -8, 8, -6, 6, -4, 4, 0] }} 
+                        animate={{ x: [0, -8, 8, -6, 6, -4, 4, 0] }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                       >
                         {formError}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import styles from "./Timer.module.css";
 import { formatTime } from "../utils/time";
 import { useNavigate } from "react-router-dom";
@@ -8,47 +8,46 @@ import CustomPopUp from "./CustomPopUp";
 
 const STORAGE_KEY = "timerStartTimestamp";
 
-export default function Timer({ running, onStop }) {
+const Timer = forwardRef(function Timer(
+  { running, seconds, setSeconds, resetWorkout },
+  ref
+) {
   const navigate = useNavigate();
-  const [seconds, setSeconds] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const intervalRef = useRef(null);
 
+  useImperativeHandle(ref, () => ({
+    getSeconds: () => seconds,
+  }));
+
   useEffect(() => {
     if (running) {
-      // Check if we already saved a start timestamp
       let startTimestamp = localStorage.getItem(STORAGE_KEY);
 
       if (!startTimestamp) {
-        // Save current timestamp if none
         startTimestamp = Date.now();
         localStorage.setItem(STORAGE_KEY, startTimestamp);
       }
 
-      // Calculate elapsed seconds based on stored timestamp
       const updateElapsed = () => {
         const elapsed = Math.floor((Date.now() - startTimestamp) / 1000);
         setSeconds(elapsed);
       };
 
-      updateElapsed(); // Update immediately on start
+      updateElapsed();
 
       intervalRef.current = setInterval(() => {
         updateElapsed();
       }, 1000);
     } else {
-      // Timer stopped
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
-      // Remove stored start time so timer resets next time
       localStorage.removeItem(STORAGE_KEY);
-      if (onStop) onStop(seconds);
     }
 
-    // Cleanup on unmount or when running changes
     return () => clearInterval(intervalRef.current);
   }, [running]);
 
@@ -61,6 +60,7 @@ export default function Timer({ running, onStop }) {
 
   const handleGoBack = () => {
     setShowAlert(false);
+    if (resetWorkout) resetWorkout();
     navigate("/");
   };
 
@@ -86,4 +86,6 @@ export default function Timer({ running, onStop }) {
       <div className={styles.timerText}>{formatTime(seconds)}</div>
     </div>
   );
-}
+});
+
+export default Timer;
