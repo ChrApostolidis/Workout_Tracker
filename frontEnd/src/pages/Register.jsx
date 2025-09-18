@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import styles from "./Register.module.css";
 import Footer from "../components/Footer";
+import { motion } from "framer-motion";
 
 export default function Register() {
   const navigate = useNavigate();
-  const {  auth } = useAuth();
+  const { auth } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -66,7 +67,14 @@ export default function Register() {
       <div className={styles.header}>
         <h1>Workout Tracker</h1>
       </div>
-      <div className={styles.registerContainer}>
+      <motion.div
+        className={styles.loginContainer}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -30 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className={styles.registerContainer}
+      >
         <form onSubmit={handleSubmit} className={styles.registerForm}>
           <h2>Create Account</h2>
           {error && <div className={styles.error}>{error}</div>}
@@ -109,7 +117,7 @@ export default function Register() {
             Already have an account? <a href="/login">Login</a>
           </p>
         </form>
-      </div>
+      </motion.div>
       <Footer />
     </div>
   );

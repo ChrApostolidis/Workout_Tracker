@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import WorkoutHistory from "../components/WorkoutHistory";
+import { IoIosLogOut } from "react-icons/io";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function Home() {
     <div className={styles.appContent}>
       <div className={styles.header}>
         <button className={styles.logoutButton} onClick={logout}>
-          Logout
+          <IoIosLogOut className={styles.logoutIcon} />
         </button>
       </div>
       <div className={styles.centerContent}>

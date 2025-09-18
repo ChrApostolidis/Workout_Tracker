@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import styles from "./Login.module.css";
 import Footer from "../components/Footer";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const { login, auth } = useAuth();
@@ -58,7 +59,13 @@ export default function Login() {
       <div className={styles.header}>
         <h1>Workout Tracker</h1>
       </div>
-      <div className={styles.loginContainer}>
+      <motion.div
+        className={styles.loginContainer}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -30 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <form onSubmit={handleSubmit} className={styles.loginForm}>
           <h2>Login</h2>
           {error && <div className={styles.error}>{error}</div>}
@@ -81,7 +88,7 @@ export default function Login() {
             Don't have an account? <a href="/register">Register</a>
           </p>
         </form>
-      </div>
+      </motion.div>
       <Footer />
     </div>
   );

@@ -90,6 +90,10 @@ h1 {
   transition: all 0.2s;
 }
 
+.logoutIcon {
+  font-size: 1.4rem;
+}
+
 .logoutButton:hover {
   background: #ad0202;
   color: white;
