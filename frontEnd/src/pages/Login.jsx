@@ -4,12 +4,14 @@ import { useAuth } from "../context/AuthContext";
 import styles from "./Login.module.css";
 import Footer from "../components/Footer";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const { login, auth } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  // const [showNotification, setShowNotification] = useState(false);
   const navigate = useNavigate();
 
   // Redirect if already authenticated
@@ -47,9 +49,11 @@ export default function Login() {
       login(data.token, data.user);
 
       console.log("Login successful, redirecting...");
+      toast.success("Login successful!");
       navigate("/", { replace: true });
     } catch (err) {
       console.error("Login error:", err);
+      toast.error(err.message || "Login failed. Please try again.");
       setError(err.message || "Login failed. Please try again.");
     }
   };

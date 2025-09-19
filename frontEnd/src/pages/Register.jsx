@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import styles from "./Register.module.css";
 import Footer from "../components/Footer";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -55,9 +56,10 @@ export default function Register() {
         throw new Error(data.message || "Registration failed");
       }
 
-      alert("Registration successful! Please login to continue.");
+      toast.success("Registration successful! Please login to continue.");
       navigate("/login");
     } catch (err) {
+      toast.error(err.message || "Registration failed. Please try again.");
       setError(err.message);
     }
   };
@@ -68,7 +70,6 @@ export default function Register() {
         <h1>Workout Tracker</h1>
       </div>
       <motion.div
-        className={styles.loginContainer}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -30 }}
