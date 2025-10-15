@@ -1,7 +1,7 @@
-const Workout = require("../models/workout");
-const User = require("../models/user");
+import Workout from "../models/workout.js";
+import User from "../models/user.js";
 
-exports.postCreateWorkout = async (req, res) => {
+export const postCreateWorkout = async (req, res) => {
   try {
     // Create the workout
     const workout = new Workout({
@@ -29,7 +29,7 @@ exports.postCreateWorkout = async (req, res) => {
   }
 };
 
-exports.getWorkouts = async (req, res) => {
+export const getWorkouts = async (req, res) => {
   try {
     const workouts = await Workout.find({ user: req.userId })
       .sort({ createdAt: -1 }) // Sort by creation date in descending order
@@ -42,7 +42,7 @@ exports.getWorkouts = async (req, res) => {
   }
 };
 
-exports.getOneWorkout = async (req, res) => {
+export const getOneWorkout = async (req, res) => {
   try {
     const workout = await Workout.findById(req.params.id);
     if (!workout) return res.status(404).json({ message: "Not found" });
@@ -52,7 +52,7 @@ exports.getOneWorkout = async (req, res) => {
   }
 };
 
-exports.deleteWorkout = async (req, res) => {
+export const deleteWorkout = async (req, res) => {
   try {
     await Workout.findByIdAndDelete(req.params.id);
     res.json({ message: "Workout deleted" });

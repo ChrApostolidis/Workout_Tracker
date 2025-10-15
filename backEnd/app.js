@@ -1,15 +1,25 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const workoutRoutes = require("./routes/workoutRoutes");
-const categories = require("./data/categories");
-const exerciseRoutes = require('./routes/exerciseRoutes');
-const authRoutes = require('./routes/authRoutes');
-const cors = require("cors");
+import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import workoutRoutes from "./routes/workoutRoutes.js";
+import categories from "./data/categories.js";
+import exerciseRoutes from "./routes/exerciseRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV !== "production") {
+  app.use(cors());
+}
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -17,11 +27,18 @@ mongoose
   .catch((err) => console.error(err));
 
 app.use("/api/workouts", workoutRoutes);
-app.use('/api/exercises', exerciseRoutes);
+app.use("/api/exercises", exerciseRoutes);
 app.use("/api/categories", categories);
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
 
-app.use('/images', express.static("public/images"));
+app.use("/images", express.static("public/images"));
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontEnd/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontEnd/dist/index.html"));
+  });
+}
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

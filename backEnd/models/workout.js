@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const setSchema = new mongoose.Schema({
   reps: Number,
@@ -30,4 +30,6 @@ const workoutSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Workout", workoutSchema);
+const Workout = mongoose.model("Workout", workoutSchema);
+
+export default Workout;

@@ -1,6 +1,6 @@
-const Exercise = require("../models/exercise");
+import Exercise from "../models/exercise.js";
 
-exports.getExercises = async (req, res) => {
+export const getExercises = async (req, res) => {
   try {
     const exercises = await Exercise.find();
     res.json(exercises);

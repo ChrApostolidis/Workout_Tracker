@@ -1,9 +1,9 @@
 // routes/workoutRoutes.js
-const express = require("express");
-const router = express.Router();
-const auth = require("../middleware/auth");
+import express from "express";
+import auth from "../middleware/auth.js";
+import * as workoutController from "../controllers/workoutController.js";
 
-const workoutController = require("../controllers/workoutController");
+const router = express.Router();
 
 // Create workout
 router.post("/", auth, workoutController.postCreateWorkout);
@@ -27,4 +27,4 @@ router.delete("/:id", workoutController.deleteWorkout);
 //   }
 // });
 
-module.exports = router;
+export default router;

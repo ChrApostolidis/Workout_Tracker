@@ -1,7 +1,7 @@
- const User = require("../models/user");
- const jwt = require("jsonwebtoken");
+import User from "../models/user.js";
+import jwt from "jsonwebtoken";
 
- exports.registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
     const { email, username, password } = req.body;
 
@@ -36,9 +36,9 @@
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
 
-exports.userLogin = async (req, res) => {
+export const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log("Login attempt for:", email);
@@ -70,4 +70,4 @@ exports.userLogin = async (req, res) => {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
   }
-}
+};

@@ -1,0 +1,22 @@
+{
+  "name": "workout-tracker",
+  "version": "1.0.0",
+  "description": "A full-stack web application for tracking your workout progress and managing exercise routines.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm install --prefix backEnd && npm install --prefix frontEnd && npm run build --prefix frontEnd",
+    "start": "npm run start --prefix backEnd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrApostolidis/Workout_Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrApostolidis/Workout_Tracker/issues"
+  },
+  "homepage": "https://github.com/ChrApostolidis/Workout_Tracker#readme"
+}
