@@ -64,7 +64,7 @@ export default function WorkoutDetails() {
   if (!workout) return <div className={styles.message}>Workout not found</div>;
 
   return (
-    <>
+    <div className={styles.pageContainer}>
       <div className={styles.detailsContainer}>
         <div className={styles.headerActions}>
           <button className={styles.backButton} onClick={() => navigate("/")}>
@@ -100,6 +100,6 @@ export default function WorkoutDetails() {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
