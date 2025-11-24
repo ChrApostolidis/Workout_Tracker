@@ -10,6 +10,7 @@ import Timer from "./Timer";
 import ShowExercises from "./ShowExercises";
 import CustomPopUp from "./CustomPopUp";
 import { formatTime } from "../utils/time";
+import { buildAssetUrl } from "../config";
 
 export default function WorkoutForm() {
   const location = useLocation();
@@ -227,7 +228,7 @@ export default function WorkoutForm() {
                         }`}
                       >
                         <img
-                          src={`http://localhost:5000${cat.imageUrl}`}
+                          src={buildAssetUrl(cat.imageUrl)}
                           alt={cat.name}
                           width={80}
                           height={80}
